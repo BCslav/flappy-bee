@@ -4,46 +4,53 @@
 [ext_resource type="Texture2D" uid="uid://8a0woa0xs06k" path="res://TopPipe.png" id="2_arayy"]
 [ext_resource type="Texture2D" uid="uid://ciiyq5vadvb1g" path="res://BotPipe.png" id="3_1uqvy"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_78010"]
-size = Vector2(101, 27)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_1uqvy"]
-size = Vector2(82, 576)
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_arayy"]
 size = Vector2(102, 26)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_i3wvs"]
 size = Vector2(82, 570)
 
-[node name="Pipes" type="StaticBody2D" groups=["pipes"]]
-collision_layer = 2
-collision_mask = 0
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_78010"]
+size = Vector2(101, 27)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1uqvy"]
+size = Vector2(82, 570)
+
+[node name="Pipes" type="Node2D" groups=["pipes"]]
 script = ExtResource("1_bepn3")
 
-[node name="BotPipeSprite" type="Sprite2D" parent="."]
-scale = Vector2(5.0000005, 5)
-texture = ExtResource("2_arayy")
+[node name="TopPipe" type="StaticBody2D" parent="."]
+position = Vector2(0, -376)
+collision_layer = 2
+collision_mask = 0
+metadata/_edit_group_ = true
 
-[node name="BotPipeCollisionBox1" type="CollisionShape2D" parent="."]
-position = Vector2(-0.5, -262.5)
-shape = SubResource("RectangleShape2D_78010")
-
-[node name="BotPipeCollisionBox2" type="CollisionShape2D" parent="."]
-position = Vector2(0, 32)
-shape = SubResource("RectangleShape2D_1uqvy")
-
-[node name="TopPipeSprite" type="Sprite2D" parent="."]
-visible = false
+[node name="TopPipeSprite" type="Sprite2D" parent="TopPipe"]
 scale = Vector2(5, 5)
 texture = ExtResource("3_1uqvy")
 
-[node name="TopPipeCollisionBox1" type="CollisionShape2D" parent="."]
-visible = false
+[node name="TopPipeCollisionBox1" type="CollisionShape2D" parent="TopPipe"]
 position = Vector2(0, 263)
 shape = SubResource("RectangleShape2D_arayy")
 
-[node name="TopPipeCollisionBox2" type="CollisionShape2D" parent="."]
-visible = false
+[node name="TopPipeCollisionBox2" type="CollisionShape2D" parent="TopPipe"]
 position = Vector2(0, -35)
 shape = SubResource("RectangleShape2D_i3wvs")
+
+[node name="BotPipe" type="StaticBody2D" parent="."]
+position = Vector2(0, 376)
+collision_layer = 2
+collision_mask = 0
+metadata/_edit_group_ = true
+
+[node name="BotPipeSprite" type="Sprite2D" parent="BotPipe"]
+scale = Vector2(5.0000005, 5)
+texture = ExtResource("2_arayy")
+
+[node name="BotPipeCollisionBox1" type="CollisionShape2D" parent="BotPipe"]
+position = Vector2(-0.5, -262.5)
+shape = SubResource("RectangleShape2D_78010")
+
+[node name="BotPipeCollisionBox2" type="CollisionShape2D" parent="BotPipe"]
+position = Vector2(0, 35)
+shape = SubResource("RectangleShape2D_1uqvy")

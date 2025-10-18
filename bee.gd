@@ -12,9 +12,11 @@ func apply_gravity(delta):
 
 func _physics_process(delta: float) -> void:
 	if alive:
-		if not is_on_floor():
+		if not is_on_floor() and not debug:
 			apply_gravity(delta)
 			check_for_pipe_collision()
+		else:
+			velocity = Vector2.ZERO
 		
 		if Input.is_action_just_pressed("flap"):
 			velocity.y = 0
