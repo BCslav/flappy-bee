@@ -1,8 +1,9 @@
-[gd_scene load_steps=8 format=3 uid="uid://c6wqwn1882osu"]
+[gd_scene load_steps=9 format=3 uid="uid://c6wqwn1882osu"]
 
-[ext_resource type="Script" uid="uid://oujrdr4xvi5s" path="res://pipe.gd" id="1_bepn3"]
+[ext_resource type="Script" uid="uid://chclj1jf65vik" path="res://top_pipe.gd" id="1_1uqvy"]
 [ext_resource type="Texture2D" uid="uid://8a0woa0xs06k" path="res://TopPipe.png" id="2_arayy"]
 [ext_resource type="Texture2D" uid="uid://ciiyq5vadvb1g" path="res://BotPipe.png" id="3_1uqvy"]
+[ext_resource type="Script" uid="uid://dwms087srppbq" path="res://bot_pipe.gd" id="3_i3wvs"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_arayy"]
 size = Vector2(102, 26)
@@ -16,13 +17,13 @@ size = Vector2(101, 27)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1uqvy"]
 size = Vector2(82, 570)
 
-[node name="Pipes" type="Node2D" groups=["pipes"]]
-script = ExtResource("1_bepn3")
+[node name="Pipes" type="Node2D"]
 
-[node name="TopPipe" type="StaticBody2D" parent="."]
+[node name="TopPipe" type="StaticBody2D" parent="." groups=["pipes"]]
 position = Vector2(0, -376)
 collision_layer = 2
 collision_mask = 0
+script = ExtResource("1_1uqvy")
 metadata/_edit_group_ = true
 
 [node name="TopPipeSprite" type="Sprite2D" parent="TopPipe"]
@@ -37,10 +38,11 @@ shape = SubResource("RectangleShape2D_arayy")
 position = Vector2(0, -35)
 shape = SubResource("RectangleShape2D_i3wvs")
 
-[node name="BotPipe" type="StaticBody2D" parent="."]
+[node name="BotPipe" type="StaticBody2D" parent="." groups=["pipes"]]
 position = Vector2(0, 376)
 collision_layer = 2
 collision_mask = 0
+script = ExtResource("3_i3wvs")
 metadata/_edit_group_ = true
 
 [node name="BotPipeSprite" type="Sprite2D" parent="BotPipe"]
