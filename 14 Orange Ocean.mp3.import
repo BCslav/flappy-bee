@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://ocarwqyorp75"
+path="res://.godot/imported/14 Orange Ocean.mp3-2f3fa68d30d1cca2b5f87b6a762baafb.mp3str"
+
+[deps]
+
+source_file="res://14 Orange Ocean.mp3"
+dest_files=["res://.godot/imported/14 Orange Ocean.mp3-2f3fa68d30d1cca2b5f87b6a762baafb.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

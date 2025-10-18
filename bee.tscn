@@ -1,0 +1,51 @@
+[gd_scene load_steps=8 format=3 uid="uid://bv00hrsnicg6v"]
+
+[ext_resource type="Script" uid="uid://bdwm7s2ec56s1" path="res://bee.gd" id="1_v5qog"]
+[ext_resource type="Texture2D" uid="uid://dq8wpdhfmbj03" path="res://Bee-Sheet.png" id="1_xww1r"]
+[ext_resource type="AudioStream" uid="uid://dofefr8il4rtd" path="res://lego-yoda-death-sound-effect.mp3" id="3_q8d8k"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_v5qog"]
+atlas = ExtResource("1_xww1r")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q8d8k"]
+atlas = ExtResource("1_xww1r")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_hoj8b"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_v5qog")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_q8d8k")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_b1nx6"]
+radius = 15.0
+height = 54.0
+
+[node name="Bee" type="CharacterBody2D" groups=["player"]]
+collision_mask = 2
+script = ExtResource("1_v5qog")
+metadata/_edit_group_ = true
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(3, 3)
+sprite_frames = SubResource("SpriteFrames_hoj8b")
+autoplay = "default"
+frame_progress = 0.08037141
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 3)
+rotation = 1.5707964
+shape = SubResource("CapsuleShape2D_b1nx6")
+
+[node name="DeathSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_q8d8k")
+volume_db = -2.862
