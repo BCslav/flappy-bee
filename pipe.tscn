@@ -1,9 +1,8 @@
 [gd_scene load_steps=9 format=3 uid="uid://c6wqwn1882osu"]
 
-[ext_resource type="Script" uid="uid://chclj1jf65vik" path="res://top_pipe.gd" id="1_1uqvy"]
+[ext_resource type="Script" uid="uid://dvb4cwo1ib5lp" path="res://pipe.gd" id="1_arayy"]
 [ext_resource type="Texture2D" uid="uid://8a0woa0xs06k" path="res://TopPipe.png" id="2_arayy"]
 [ext_resource type="Texture2D" uid="uid://ciiyq5vadvb1g" path="res://BotPipe.png" id="3_1uqvy"]
-[ext_resource type="Script" uid="uid://dwms087srppbq" path="res://bot_pipe.gd" id="3_i3wvs"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_arayy"]
 size = Vector2(102, 26)
@@ -17,13 +16,16 @@ size = Vector2(101, 27)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1uqvy"]
 size = Vector2(82, 570)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_08mfy"]
+size = Vector2(16, 128)
+
 [node name="Pipes" type="Node2D"]
+script = ExtResource("1_arayy")
 
 [node name="TopPipe" type="StaticBody2D" parent="." groups=["pipes"]]
-position = Vector2(0, -376)
+position = Vector2(0, -344)
 collision_layer = 2
 collision_mask = 0
-script = ExtResource("1_1uqvy")
 metadata/_edit_group_ = true
 
 [node name="TopPipeSprite" type="Sprite2D" parent="TopPipe"]
@@ -39,10 +41,9 @@ position = Vector2(0, -35)
 shape = SubResource("RectangleShape2D_i3wvs")
 
 [node name="BotPipe" type="StaticBody2D" parent="." groups=["pipes"]]
-position = Vector2(0, 376)
+position = Vector2(0, 344)
 collision_layer = 2
 collision_mask = 0
-script = ExtResource("3_i3wvs")
 metadata/_edit_group_ = true
 
 [node name="BotPipeSprite" type="Sprite2D" parent="BotPipe"]
@@ -56,3 +57,11 @@ shape = SubResource("RectangleShape2D_78010")
 [node name="BotPipeCollisionBox2" type="CollisionShape2D" parent="BotPipe"]
 position = Vector2(0, 35)
 shape = SubResource("RectangleShape2D_1uqvy")
+
+[node name="ScoreBox" type="Area2D" parent="." groups=["score"]]
+collision_layer = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ScoreBox"]
+shape = SubResource("RectangleShape2D_08mfy")
+
+[connection signal="body_entered" from="ScoreBox" to="." method="_on_score_box_body_entered"]
