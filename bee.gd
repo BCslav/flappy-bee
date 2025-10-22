@@ -2,7 +2,7 @@ extends CharacterBody2D
 
 signal died
 
-var FLAP_POWER = 350
+var FLAP_POWER = 335
 var debug: bool = false
 var alive = true
 
@@ -30,7 +30,8 @@ func _physics_process(delta: float) -> void:
 		
 	
 	if Input.is_action_just_pressed("debug_stop"):
-		debug = not debug	
+		debug = not debug
+		$CollisionShape2D.set_deferred("disabled", debug)
 	
 	move_and_slide()
 	if alive:
@@ -48,6 +49,7 @@ func check_for_pipe_collision():
 			return
 
 func die():
+	velocity.y = 0
 	velocity.y -= FLAP_POWER * 2
 	$CollisionShape2D.set_deferred("disabled", true)
 	alive = false

@@ -2,7 +2,7 @@ extends Node2D
 
 signal gate_passed
 
-var scroll_speed = 200 
+var scroll_speed = 400
 
 func _physics_process(delta: float) -> void:
 	global_position.x -= scroll_speed * delta
