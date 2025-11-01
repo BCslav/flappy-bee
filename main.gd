@@ -5,25 +5,37 @@ extends Node2D
 @onready var pipe_spawn_position = $PlayArea/Pipes/StartPosition
 @onready var pipe_container = $PlayArea/Pipes/PipeContainer
 
+enum Difficulty {EASY, MEDIUM, HARD}
+#enum Player_State {ALIVE, DEAD}
+var selected_difficulty = ""
+
 var score = 0
 var best_score = 0
 var first_start = true
 var start_time_count = 3
 var global_speed = 300
+var speed_up_increment = 50
+var pipe_gap = 0
+var pipe_offset = 5
 
-func pipe_speed_up():
+func visible_pipe_speed_up():
 	for pipe in pipe_container.get_children():
 		pipe.scroll_speed = global_speed
 		
 func define_random_position():
 	var random_start_position: Vector2 = pipe_spawn_position.position
 	random_start_position.y = random_start_position.y + randf_range(-175,175)
-	print(str(random_start_position.y))
+	print(str(pipe_gap))
 	random_start_position.x = get_viewport_rect().size.x + 100
 	return random_start_position
 
 func spawn_pipes(random_start_position: Vector2):
 	var new_pipes = pipe_scene.instantiate()
+	var top_pipe = new_pipes.get_node("TopPipe")
+	var bot_pipe = new_pipes.get_node("BotPipe")
+	top_pipe.position.y -= pipe_gap
+	bot_pipe.position.y += pipe_gap
+	
 	new_pipes.global_position = random_start_position
 	new_pipes.scroll_speed = global_speed
 		
@@ -64,20 +76,20 @@ func _on_new_pipes_gate_passed():
 		
 	if score == 25:
 		$Sounds/Nice.play()
-		global_speed += 50
-		pipe_speed_up()
+		global_speed += speed_up_increment
+		visible_pipe_speed_up()
 	if score == 50:
 		$Sounds/MKImpressive.play()
-		global_speed += 50
-		pipe_speed_up()
+		global_speed += speed_up_increment
+		visible_pipe_speed_up()
 	if score == 75:
 		$Sounds/Godlike.play()
-		global_speed += 50
-		pipe_speed_up()
+		global_speed += speed_up_increment
+		visible_pipe_speed_up()
 	if score == 100:
 		$Sounds/NiceCk.play()
-		global_speed += 50
-		pipe_speed_up()
+		global_speed += speed_up_increment
+		visible_pipe_speed_up()
 	
 
 func _on_button_pressed() -> void:
@@ -88,8 +100,8 @@ func _on_button_pressed() -> void:
 	$UI/Menu/MenuText.text = str(start_time_count)
 	$UI/Menu/MenuText.add_theme_color_override("font_color", Color(0, 0 ,0))
 
-func game_start():
-	
+func game_start():	
+	#move player, spawn pipes
 	$PlayArea/Pipes/PipeTimer.start()
 	player.position = $PlayArea/Bee/StartPosition.position
 	player.velocity = Vector2.ZERO
@@ -99,10 +111,6 @@ func game_start():
 	
 	for pipe in pipe_container.get_children():
 		pipe.scroll_speed = global_speed
-	
-	if not first_start:
-		for pipe in pipe_container.get_children():
-			pipe.queue_free()
 		
 	first_start = false
 		
@@ -149,3 +157,44 @@ func _on_start_timer_timeout() -> void:
 		$StartTimer.stop()
 		start_time_count = 3
 		game_start()
+
+
+func _on_hard_pressed() -> void:
+	selected_difficulty = Difficulty.HARD
+	game_load()
+	
+func _on_medium_pressed() -> void:
+	selected_difficulty = Difficulty.MEDIUM
+	game_load()
+	
+func _on_easy_pressed() -> void:
+	selected_difficulty = Difficulty.EASY
+	game_load()
+	
+func game_load():
+	difficulty_set()	
+	if not first_start:
+		for pipe in pipe_container.get_children():
+			if pipe.global_position.x < 500:
+				pipe.queue_free()
+	
+	for pipe in pipe_container.get_children():
+		var top_pipe = pipe.get_node("TopPipe")
+		var bot_pipe = pipe.get_node("BotPipe")
+		top_pipe.position.y -= pipe_gap
+		bot_pipe.position.y += pipe_gap
+		
+	$StartTimer.start()
+	$UI/Menu/MenuBg.set_visible(false)
+	$UI/Menu/HBoxContainer.set_visible(false)
+	$UI/Menu/MenuScore.set_visible(false)
+	$UI/Menu/MenuText.text = str(start_time_count)
+	$UI/Menu/MenuText.add_theme_color_override("font_color", Color(0, 0 ,0))
+
+func difficulty_set():
+	if selected_difficulty == Difficulty.EASY:
+		pipe_gap += 2 * pipe_offset
+	if selected_difficulty == Difficulty.MEDIUM:
+		pipe_gap += 1 * pipe_offset
+	if selected_difficulty == Difficulty.HARD:
+		pipe_gap += 0 * pipe_offset

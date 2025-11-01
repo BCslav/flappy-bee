@@ -138,17 +138,28 @@ grow_vertical = 2
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Button" type="Button" parent="UI/Menu"]
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/Menu"]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -23.0
-offset_top = 36.0
-offset_right = 23.0
-offset_bottom = 67.0
+offset_left = -73.0
+offset_top = 33.0
+offset_right = 73.0
+offset_bottom = 73.0
 grow_horizontal = 2
-text = "Start"
+
+[node name="Easy" type="Button" parent="UI/Menu/HBoxContainer"]
+layout_mode = 2
+text = "Easy"
+
+[node name="Medium" type="Button" parent="UI/Menu/HBoxContainer"]
+layout_mode = 2
+text = "Medium"
+
+[node name="Hard" type="Button" parent="UI/Menu/HBoxContainer"]
+layout_mode = 2
+text = "Hard"
 
 [node name="Music" type="AudioStreamPlayer" parent="."]
 stream = SubResource("AudioStreamMP3_h2yge")
@@ -182,5 +193,7 @@ volume_db = 14.312
 [connection signal="died" from="PlayArea/Bee/Player" to="." method="_on_player_died"]
 [connection signal="timeout" from="PlayArea/Bee/DeathTimer" to="." method="_on_death_timer_timeout"]
 [connection signal="timeout" from="PlayArea/Pipes/PipeTimer" to="." method="_on_pipe_timer_timeout"]
-[connection signal="pressed" from="UI/Menu/Button" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="UI/Menu/HBoxContainer/Easy" to="." method="_on_easy_pressed"]
+[connection signal="pressed" from="UI/Menu/HBoxContainer/Medium" to="." method="_on_medium_pressed"]
+[connection signal="pressed" from="UI/Menu/HBoxContainer/Hard" to="." method="_on_hard_pressed"]
 [connection signal="timeout" from="StartTimer" to="." method="_on_start_timer_timeout"]
